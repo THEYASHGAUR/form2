@@ -278,41 +278,41 @@
 
     // Replace only the updateGraph function in your existing code:
 
-    function updateGraph(value) {
-      const width = 600;
-      const height = 200;
-      const points = [];
+    // function updateGraph(value) {
+    //   const width = 600;
+    //   const height = 200;
+    //   const points = [];
 
-      // Fixed slope points
-      const slope = [
-        [100, height * 0.865],
-        [width * 0.2, height * 0.85],
-        [width * 0.4, height * 0.75],
-        [width * 0.6, height * 0.6],
-        [width * 0.8, height * 0.4],
-        [width, height * 0.15]
-      ];
+    //   // Fixed slope points
+    //   const slope = [
+    //     [100, height * 0.865],
+    //     [width * 0.2, height * 0.85],
+    //     [width * 0.4, height * 0.75],
+    //     [width * 0.6, height * 0.6],
+    //     [width * 0.8, height * 0.4],
+    //     [width, height * 0.15]
+    //   ];
 
-      // Create path from slope points
-      points.push(...slope.map(([x, y]) => `${x},${y}`));
+    //   // Create path from slope points
+    //   points.push(...slope.map(([x, y]) => `${x},${y}`));
 
-      // Complete the path
-      points.push(`${width},${height}`);
-      points.push(`0,${height}`);
+    //   // Complete the path
+    //   points.push(`${width},${height}`);
+    //   points.push(`0,${height}`);
 
-      // Update path
-      curve.setAttribute('d', `M ${points.join(' L ')} Z`);
+    //   // Update path
+    //   curve.setAttribute('d', `M ${points.join(' L ')} Z`);
 
-      // Update gradient based on slider value
-      const opacity = 0.1 + (value / 300) * 0.7;
-      curve.setAttribute('fill-opacity', opacity);
-    }
+    //   // Update gradient based on slider value
+    //   const opacity = 0.1 + (value / 300) * 0.7;
+    //   curve.setAttribute('fill-opacity', opacity);
+    // }
 
     slider.addEventListener('input', (e) => {
       const value = e.target.value;
       sliderValue.textContent = value;
       displayValue.textContent = value;
-      updateGraph(value);
+      // updateGraph(value);
 
       // Update slider thumb position
       const percent = (value - slider.min) / (slider.max - slider.min);
@@ -349,7 +349,7 @@
 
 
     // Initial graph render
-    updateGraph(156);
+    // updateGraph(156);
 
 
     // 2nd page
