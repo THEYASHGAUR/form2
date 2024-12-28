@@ -12,6 +12,550 @@
     href="https://fonts.googleapis.com/css2?family=K2D:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
     rel="stylesheet">
   <title>Solar Panels on monthly basis? We can do it!</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background-color: #a8a2a2;
+    }
+
+    .calculator-container,
+    .energy-container,
+    .form-container,
+    .bill-container {
+      /* width: 100%; */
+      max-width: 412px;
+      height: fit-content;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+      box-sizing: border-box;
+    }
+
+    #hide {
+      display: none;
+    }
+
+    h1 {
+      color: #1C415D;
+      font-size: 17px;
+      margin-bottom: 5px;
+      font-family: "Manrope", serif;
+    }
+
+    .subtitle {
+      color: #000;
+      margin: 20px 90px 20px 90px;
+      font-weight: 700;
+      font-size: 14px;
+      font-family: "Manrope", serif;
+      text-align: center;
+
+    }
+
+    .green {
+      color: #6AC7CC;
+    }
+
+    .question {
+      color: #2d3748;
+      display: flex;
+      justify-content: center;
+      font-size: 14px;
+      font-family: "K2D", serif;
+      font-weight: 600;
+      font-style: normal;
+    }
+
+    .display {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 69px;
+      height: 24px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 7px;
+      background-color: #fff;
+      font-size: 14px;
+
+      margin-top: 30px;
+      color: #ccc;
+    }
+
+    .graph-container {
+      position: relative;
+      margin-bottom: 10px;
+      height: 100px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* background-color: red; */
+
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+      fill: linear-gradient(180deg, #fff 0%, #1D4562 100%);
+    }
+
+    .slider-container {
+      position: relative;
+      width: 95%;
+      height: 60px;
+      margin-top: 20px;
+    }
+
+    .slider {
+      width: 100%;
+      -webkit-appearance: none;
+      height: 4px;
+      background: #18415E;
+      border-radius: 2px;
+      outline: none;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid #2b6cb0;
+      cursor: pointer;
+      position: relative;
+      z-index: 2;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Add text using ::after pseudo-element */
+    /* .slider::-webkit-slider-thumb::after {
+  content: attr(value); 
+  display: block;
+  color: white;
+} */
+
+    .slider-value {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #2b6cb0;
+      color: white;
+      padding: 8px;
+      border-radius: 4px;
+      font-size: 14px;
+      pointer-events: none;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .next-button {
+      display: flex;
+      align-items: center;
+      padding: 10px 40px 10px 55px;
+      background: white;
+      border: 2px solid #223266;
+      color: #000;
+      border-radius: 8px;
+      gap: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 1px;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 10px;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      background: #cbd5e0;
+      border-radius: 50%;
+    }
+
+    #active {
+      background: #1F435F;
+    }
+
+    .arrow {
+      height: 15px;
+      width: 15px;
+    }
+
+    /* 2nd page */
+
+    .energy-consumption {
+      height: 206px;
+      width: 372px;
+      background-image: url(./assets/solar.png);
+      background-color: #0F2D47;
+      border-radius: 12px;
+    }
+
+    .energy-container .button-container {
+      margin-top: 20px;
+    }
+
+    .energy-container .energy-consumption .energy-consumption-text {
+      padding-top: 20px;
+      color: #fff;
+      font-size: 24px;
+      font-family: "Manrope", serif;
+      font-weight: bolder;
+      margin-top: 20px;
+      margin-left: 20px;
+
+    }
+
+    .energy-consumption-subtext {
+      color: #fff;
+      font-size: 10px;
+      width: 265px;
+      font-family: "Manrope", serif;
+      margin-left: 20px;
+      margin-top: -20px;
+    }
+
+    .slider-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .energySlider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 50%;
+      height: 2px !important;
+      border-radius: 5px;
+      outline: none;
+      background: linear-gradient(to right, white, #42A5A8);
+      cursor: pointer;
+      margin: 0px 0px 20px 20px;
+    }
+
+    /* Style the thumb */
+    .energySlider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border: 2px solid white;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .energySlider::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      background: white;
+      border: 2px solid white;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .value-display {
+      background-color: #6AC7CC;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      height: 25px;
+      width: 150px;
+      border-radius: 18px;
+      font-size: 1.2rem;
+      margin-left: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .value-display span {
+      margin-right: 8px;
+      font-size: 10px;
+      font-family: "Manrope", serif;
+    }
+
+    .decrement-btn,
+    .increment-btn {
+      color: white;
+      cursor: pointer;
+      border: none;
+      background-color: #6AC7CC;
+      border-radius: 8px;
+      font-size: 25px;
+    }
+
+    /* .decrement-btn:hover , .increment-btn:hover {
+  background-color: #2980b9;
+} */
+
+    /* 3rd page */
+    .form-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .form-description {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .form {
+      width: 100%;
+    }
+
+    .form-title {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .form-field-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .input-container {
+      display: flex;
+      justify-content: space-between;
+    }
+
+
+    #input-name,
+    #input-surname,
+    #input-email,
+    #input-number,
+    #input-postcode {
+      border-color: #18415e;
+      border-width: 1px;
+      color: #18415e;
+      height: 34.79px;
+      width: 135px;
+      border-radius: 5px;
+      padding: 0% 5%;
+    }
+
+    #input-email {
+      width: 90%;
+    }
+
+    #input-name::placeholder,
+    #input-surname::placeholder,
+    #input-email::placeholder,
+    #input-number::placeholder,
+    #input-postcode::placeholder {
+      color: #18415e;
+
+    }
+
+    .form-description-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 1px;
+
+    }
+
+    .form-container .button-container button {
+      margin-top: 30px;
+    }
+
+
+    /* 4th page */
+    .bill-container {
+      width: 90%;
+      max-width: 412px;
+      background: #031A2D;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      padding: 0px;
+    }
+
+    .header {
+      /* background: #113f67; */
+      padding: 16px;
+      text-align: center;
+      font-size: 1.1em;
+      color: #fff;
+      font-family: "Manrope", serif;
+    }
+
+    .header span {
+      color: #71BAF6;
+    }
+
+    .bill-container .subtitle {
+      text-align: center;
+      color: #fff;
+      font-size: 0.9em;
+    }
+
+    .products {
+      padding: 0px 10%;
+      margin-bottom: 5%;
+    }
+
+    .product {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-family: "Manrope", serif;
+      font-weight: 500;
+    }
+
+    .product span {
+      font-size: 0.9em;
+      color: white;
+    }
+
+    .sub-subtitle {
+      color: #6AC7CC;
+      font-family: "Manrope", serif;
+      display: flex;
+      justify-self: center;
+    }
+
+    .product button {
+      /* background: #00dbd0; */
+      background-color: #A2ABB2;
+      color: black;
+      cursor: pointer;
+      border: none;
+      /* border-radius: 8px; */
+      /* padding: 0px 5px; */
+    }
+
+    .products-title {
+      color: white;
+      font-family: "Manrope", serif;
+    }
+
+    .product-buttons {
+      overflow: hidden;
+      background-color: #A2ABB2;
+      border-radius: 8px;
+      color: black;
+      display: flex;
+      justify-content: center;
+      width: 54px;
+    }
+
+    .product-buttons span {
+      color: black;
+    }
+
+    .products-buttons button {
+      border-width: 0 0 0 1px;
+      border-left: black;
+      /* font-size: 1px; */
+      /* padding: 0px; */
+    }
+
+    .hr {
+      background-color: white;
+    }
+
+    .summary {
+      background: white;
+      color: black;
+      border-radius: 16px;
+      padding: 16px;
+      /* margin: 16px; */
+    }
+
+    .summary p {
+      margin: 8px 0;
+    }
+
+    .summary-title {
+      font-size: 16px;
+      font-weight: 900;
+      font-family: "Manrope", serif;
+    }
+
+    .summary-table {
+      width: 100%;
+      font-size: 11px;
+      font-family: "Manrope", serif;
+      font-weight: 600;
+    }
+
+    .summary-cover {
+      font-size: 11px;
+      font-family: "Manrope", serif;
+      font-weight: 600;
+    }
+
+    .summary-cover-span {
+      font-size: 15px;
+      color: #05477E;
+    }
+
+    .summary-title-span {
+      color: #1F435F;
+    }
+
+    .summary-loan {
+      font-size: 11px;
+      font-weight: 700;
+      font-family: "Manrope", serif;
+    }
+
+    .cta {
+      text-align: center;
+      margin-top: 16px;
+    }
+
+    .cta button {
+      background: white;
+      color: black;
+      padding: 10px 20px;
+      border: solid;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+
+    .cta button:active {
+      background: white;
+      color: rgb(180, 180, 180);
+    }
+
+    .cover {
+      background-color: #A8BFD2;
+      padding: 10px;
+      border-radius: 21px;
+      font-size: 11px;
+      font-family: "Manrope", serif;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
 </head>
 
 <body>
@@ -56,8 +600,8 @@
 
     <div class="slider-container">
       <!-- sun svg code -->
-      
-      
+
+
       <input type="range" min="0" max="300" value="156" class="slider" id="priceSlider" oninput="updateSliderValue()">
       <div class="slider-value">$<span id="sliderValue">156</span></div>
     </div>
